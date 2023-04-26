@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+.field{
+  border: black solid 1px;
+  border-radius: 10px;
+  width: 50px;
+  height: 40px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  color: white;
+  font-size: 18px;
+}
+
+.gameboy{
+  width: 90%;
+  margin-left: 5%;
+  border: black solid 1px;
+  padding: 10px;
+  background-image: linear-gradient(blue, turquoise);
+}
+
+.gameField{
+  width: 40%;
+  margin-left: 25%;
+  border: black solid 1px;
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gameButtons{
+
+}
