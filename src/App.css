@@ -63,7 +63,13 @@
   padding: 10px;
   background-color: white;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+}
+
+.rowContainer{
+  display: flex;
+  flex-direction: row;
 }
 
 .gameButtons{
