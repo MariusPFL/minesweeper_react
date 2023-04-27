@@ -42,7 +42,8 @@
   border-radius: 10px;
   width: 50px;
   height: 40px;
-  margin-left: 30px;
+  margin-left: 15px;
+  margin-right: 15px;
   margin-bottom: 30px;
   color: white;
   font-size: 18px;
@@ -53,15 +54,16 @@
   margin-left: 5%;
   border: black solid 1px;
   padding: 10px;
-  background-image: linear-gradient(blue, turquoise);
+  background-image: linear-gradient(rgb(66, 66, 235), rgb(9, 182, 130));
 }
 
 .gameField{
-  width: 40%;
-  margin-left: 25%;
+  border-radius: 10px;
+  width: fit-content;
   border: black solid 1px;
-  padding: 10px;
+  padding: 40px;
   background-color: white;
+  opacity: 1;
   display: flex;
   flex-direction: column;
   /* flex-wrap: wrap; */
