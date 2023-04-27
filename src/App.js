@@ -8,12 +8,14 @@ import Confetti from 'react-confetti'
 function App() {
   console.log("Runs the code starts!")
   // The main Attributes
-
-  // Ist hier die xAxis
-  let columnLength = 5;
+  
+  const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
   // Ist hier die yAxis
-  let rowLength = 5;
-  const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowLength);
+  const [rowCount, setRowCount] = React.useState(localStorage.getItem("rowCount") != null ? localStorage.getItem("rowCount") : 5);
+  // Ist hier die xAxis
+  const [columnCount, setColumnCount] = React.useState(localStorage.getItem("columnCount") != null ? localStorage.getItem("columnCount") : 5);
+
+  
   let gameFieldAsArray = [];
   
   const [openFields, setOpenFields] = React.useState(0);
@@ -36,7 +38,7 @@ function App() {
 
   // Check winning Conditions
   React.useEffect(() => {
-    if (openFields === (rowLength * columnLength) - bombsCount) {
+    if (openFields === (rowCount * columnCount) - bombsCount) {
       // alert("you won!");
       setShowWinEffect(true)
       window.setTimeout(RestartTheGame, 5000)
@@ -46,9 +48,9 @@ function App() {
   // Functions
   function CreateFieldAndSaveToLocalStorage(){
     // Creating the Game Field and generates boms and numbers
-    for (let rowIndex = 0; rowIndex < rowLength; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       const row = [];
-      for (let columnIndex = 0; columnIndex < columnLength; columnIndex++) {
+      for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
         row.push(0);
       }
       gameFieldAsArray.push(row);
@@ -73,8 +75,8 @@ function App() {
 
   function setBombsAndNumbers(){
     for (let index = 0; index < bombsCount; index++) {
-        let yAxis = getRandomNumber(rowLength);
-        let xAxis = getRandomNumber(columnLength);
+        let yAxis = getRandomNumber(rowCount);
+        let xAxis = getRandomNumber(columnCount);
       if (gameFieldAsArray[yAxis][xAxis] < 100) {
         gameFieldAsArray[yAxis][xAxis] = 100
         // Going through all the neighbours and highers them
@@ -96,10 +98,10 @@ function App() {
   
   function setNumber(yAxisIndex, xAxisIndex){
     console.log('setting for: y: ' + yAxisIndex + ' x: ' + xAxisIndex)
-    if (yAxisIndex < 0 || yAxisIndex > rowLength -1) {
+    if (yAxisIndex < 0 || yAxisIndex > rowCount -1) {
       console.log('yAxis outside bounds')
     }
-    else if(xAxisIndex < 0 || xAxisIndex > columnLength - 1){
+    else if(xAxisIndex < 0 || xAxisIndex > columnCount - 1){
       console.log('xAxis outside bounds')
     }
     else if(gameFieldAsArray[yAxisIndex][xAxisIndex] >= 100){
@@ -263,13 +265,17 @@ function App() {
           </div>
         </center>
         <p>Opened Fields: {openFields}</p>
-        <p>Fields left: {rowLength * columnLength - openFields}</p>
+        <p>Fields left: {rowCount * columnCount - openFields}</p>
         <p>Bombs count: {bombsCount}</p>
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
-        <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowLength * columnLength / 2}/>
+        <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
+        <input type='number' value={rowCount} onChange={(event) => {setRowCount(event.target.value)}} id="inputRowCount" min={Math.round(bombsCount / 2)} />
+        <input type='number' value={columnCount} onChange={(event) => {setColumnCount(event.target.value)}} id="inputColumnCount" min={Math.round(bombsCount / 2)} max={16} />
         <button onClick={() =>{
           localStorage.setItem("bombsNumber", bombsCount)
+          localStorage.setItem("rowCount", rowCount);
+          localStorage.setItem("columnCount", columnCount);
           RestartTheGame();
         }}>regenerate Field</button>
       </div>
