@@ -2,13 +2,13 @@ import React from "react";
 
 function Field(props){
     let hiddenValue = props.value;
-    const[backGroundColor, setBackGroundColor] = React.useState("blue");
+    const[backGroundColor, setBackGroundColor] = React.useState("black");
     const [displayValue, setDisplayValue] = React.useState("?");
     function handleClick(event){
         if(event.ctrlKey){
             if (displayValue === "*") {
                 setDisplayValue("?")
-                setBackGroundColor("blue")
+                setBackGroundColor("black")
             }
             else if(displayValue === "?"){
                 setDisplayValue("*");
