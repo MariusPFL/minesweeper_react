@@ -72,6 +72,10 @@
   flex-direction: row;
 }
 
+.blankSpaces100px{
+  height: 100px;
+}
+
 .gameButtons{
 
 }

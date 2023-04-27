@@ -8,7 +8,10 @@ import Confetti from 'react-confetti'
 function App() {
   console.log("Runs the code starts!")
   // The main Attributes
+
+  // Ist hier die xAxis
   let columnLength = 5;
+  // Ist hier die yAxis
   let rowLength = 5;
   let bombsCount;
   let gameFieldAsArray = [];
@@ -101,7 +104,7 @@ function App() {
     else if(xAxisIndex < 0 || xAxisIndex > columnLength - 1){
       console.log('xAxis outside bounds')
     }
-    else if(gameFieldAsArray[yAxisIndex][yAxisIndex] >= 100){
+    else if(gameFieldAsArray[yAxisIndex][xAxisIndex] >= 100){
       console.log('already bomb on that field')
     }
     else{
@@ -128,6 +131,7 @@ function App() {
   return (
     <div className="App">
       {showWinEffect ? <Confetti /> : "" }
+      <div className='blankSpaces100px'/>
       <div className='gameboy'>
         <div className='gameField'>
           {
