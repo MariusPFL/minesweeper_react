@@ -270,8 +270,8 @@ function App() {
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
         <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
-        <input type='number' value={rowCount} onChange={(event) => {setRowCount(event.target.value)}} id="inputRowCount" min={Math.round(bombsCount / 2)} />
-        <input type='number' value={columnCount} onChange={(event) => {setColumnCount(event.target.value)}} id="inputColumnCount" min={Math.round(bombsCount / 2)} max={16} />
+        <input type='number' value={rowCount} onChange={(event) => {setRowCount(event.target.value)}} id="inputRowCount" min={bombsCount > 5 ? 6 : Math.round(bombsCount / 2)} max={12}/>
+        <input type='number' value={columnCount} onChange={(event) => {setColumnCount(event.target.value)}} id="inputColumnCount" min={bombsCount > 5 ? 6 : Math.round(bombsCount / 2)} max={16} />
         <button onClick={() =>{
           localStorage.setItem("bombsNumber", bombsCount)
           localStorage.setItem("rowCount", rowCount);
