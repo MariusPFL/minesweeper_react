@@ -9,12 +9,12 @@ function App() {
   console.log("Runs the code starts!")
   // The main Attributes
   
-  const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
   // Ist hier die yAxis
   const [rowCount, setRowCount] = React.useState(localStorage.getItem("rowCount") != null ? localStorage.getItem("rowCount") : 5);
   // Ist hier die xAxis
   const [columnCount, setColumnCount] = React.useState(localStorage.getItem("columnCount") != null ? localStorage.getItem("columnCount") : 5);
-
+  
+  const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
   
   let gameFieldAsArray = [];
   
@@ -147,121 +147,6 @@ function App() {
             {
               createFields()
             }
-            {/* <div className='rowContainer'>
-            <Field 
-              value = {gameFieldAsArray[0][0]}
-              increaseCounterMethod = {increaseOpenedFieldsCounter}
-            />
-            <Field 
-              value = {gameFieldAsArray[0][1]}
-              increaseCounterMethod = {increaseOpenedFieldsCounter}
-            />
-            <Field 
-              value = {gameFieldAsArray[0][2]}
-              increaseCounterMethod = {increaseOpenedFieldsCounter}
-            />
-            <Field 
-              value = {gameFieldAsArray[0][3]}
-              increaseCounterMethod = {increaseOpenedFieldsCounter}
-            />
-            <Field 
-              value = {gameFieldAsArray[0][4]}
-              increaseCounterMethod = {increaseOpenedFieldsCounter}
-            />
-            </div>
-
-            <div className='rowContainer'>
-              <Field 
-                value = {gameFieldAsArray[1][0]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[1][1]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[1][2]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[1][3]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[1][4]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-            </div>
-
-
-            <div className='rowContainer'>
-              <Field 
-                value = {gameFieldAsArray[2][0]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[2][1]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[2][2]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[2][3]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[2][4]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-            </div>
-
-            <div className='rowContainer'>
-              <Field 
-                value = {gameFieldAsArray[3][0]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[3][1]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[3][2]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[3][3]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[3][4]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-            </div>
-
-            <div className='rowContainer'>
-              <Field 
-                value = {gameFieldAsArray[4][0]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[4][1]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[4][2]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[4][3]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-              <Field 
-                value = {gameFieldAsArray[4][4]}
-                increaseCounterMethod = {increaseOpenedFieldsCounter}
-              />
-            </div> */}
           </div>
         </center>
         <p>Opened Fields: {openFields}</p>
@@ -269,15 +154,31 @@ function App() {
         <p>Bombs count: {bombsCount}</p>
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
-        <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
-        <input type='number' value={rowCount} onChange={(event) => {setRowCount(event.target.value)}} id="inputRowCount" min={bombsCount > 5 ? 6 : Math.round(bombsCount / 2)} max={12}/>
-        <input type='number' value={columnCount} onChange={(event) => {setColumnCount(event.target.value)}} id="inputColumnCount" min={bombsCount > 5 ? 6 : Math.round(bombsCount / 2)} max={16} />
-        <button onClick={() =>{
-          localStorage.setItem("bombsNumber", bombsCount)
-          localStorage.setItem("rowCount", rowCount);
-          localStorage.setItem("columnCount", columnCount);
-          RestartTheGame();
-        }}>regenerate Field</button>
+        <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
+          <label>Bombs</label>
+          <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
+          <label>Rows</label>
+          <input type='number' value={rowCount} onChange={(event) => 
+            {
+              setRowCount(event.target.value)
+              if (rowCount * columnCount / 2 < bombsCount) {
+                setBombsCount(Math.round(rowCount * columnCount / 2))
+              }
+            }} id="inputRowCount" min={1} max={16}/>
+          <label>Columns</label>
+          <input type='number' value={columnCount} onChange={(event) => {
+            setColumnCount(event.target.value)
+            if (rowCount * columnCount / 2 < bombsCount) {
+              setBombsCount(Math.round(rowCount * columnCount / 2))
+            }
+            }} id="inputColumnCount" min={2} max={16} />
+          <button onClick={() =>{
+            localStorage.setItem("bombsNumber", bombsCount)
+            localStorage.setItem("rowCount", rowCount);
+            localStorage.setItem("columnCount", columnCount);
+            RestartTheGame();
+          }}>regenerate Field</button>
+        </div>
       </div>
     </div>
   );
