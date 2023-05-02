@@ -8,7 +8,6 @@ import Confetti from 'react-confetti'
 function App() {
   console.log("Runs the code starts!")
   // The main Attributes
-  
   // Ist hier die yAxis
   const [rowCount, setRowCount] = React.useState(localStorage.getItem("rowCount") != null ? localStorage.getItem("rowCount") : 5);
   // Ist hier die xAxis
@@ -20,7 +19,7 @@ function App() {
   
   const [openFields, setOpenFields] = React.useState(0);
   const [showWinEffect, setShowWinEffect] = React.useState(false);
-
+  
   let resultFromLocalStorage = JSON.parse(localStorage.getItem("gameField"));
   console.log("Results from Local Storage:")
   console.log(localStorage.getItem("gameField"));
@@ -30,12 +29,18 @@ function App() {
   else{
     CreateFieldAndSaveToLocalStorage();
   }
-
-  // Intizalizing UseEffect
+  
+  // UseEffects
   React.useEffect(() => {
     createFields();
   }, [])
 
+  React.useEffect(() => {
+    if (rowCount * columnCount / 2 < bombsCount) {
+      setBombsCount(Math.floor(rowCount * columnCount / 2))
+    }
+  }, [rowCount, columnCount])
+  
   // Check winning Conditions
   React.useEffect(() => {
     if (openFields === (rowCount * columnCount) - bombsCount) {
@@ -95,21 +100,16 @@ function App() {
     }
   }
   
-  
+  // Sorry for this confusion this construction exists because of the console Logging which is obsolete now
   function setNumber(yAxisIndex, xAxisIndex){
-    console.log('setting for: y: ' + yAxisIndex + ' x: ' + xAxisIndex)
     if (yAxisIndex < 0 || yAxisIndex > rowCount -1) {
-      console.log('yAxis outside bounds')
     }
     else if(xAxisIndex < 0 || xAxisIndex > columnCount - 1){
-      console.log('xAxis outside bounds')
     }
     else if(gameFieldAsArray[yAxisIndex][xAxisIndex] >= 100){
-      console.log('already bomb on that field')
     }
     else{
       gameFieldAsArray[yAxisIndex][xAxisIndex] = gameFieldAsArray[yAxisIndex][xAxisIndex] + 1;
-      console.log('success');
     }
   }
   function getRandomNumber(max){
@@ -149,9 +149,11 @@ function App() {
             }
           </div>
         </center>
+        <p>Total Fields: {rowCount * columnCount}</p>
+        <p>Total Bombs: {bombsCount}</p>
+        <p>Difficulty: {Math.round((bombsCount / (rowCount * columnCount)) * 200)} %</p>
         <p>Opened Fields: {openFields}</p>
-        <p>Fields left: {rowCount * columnCount - openFields}</p>
-        <p>Bombs count: {bombsCount}</p>
+        <p>Fields left: {rowCount * columnCount - bombsCount - openFields}</p>
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
         <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
@@ -160,18 +162,13 @@ function App() {
           <label>Rows</label>
           <input type='number' value={rowCount} onChange={(event) => 
             {
-              setRowCount(event.target.value)
-              if (rowCount * columnCount / 2 < bombsCount) {
-                setBombsCount(Math.round(rowCount * columnCount / 2))
-              }
+              setRowCount(event.target.value);
             }} id="inputRowCount" min={1} max={16}/>
           <label>Columns</label>
           <input type='number' value={columnCount} onChange={(event) => {
-            setColumnCount(event.target.value)
-            if (rowCount * columnCount / 2 < bombsCount) {
-              setBombsCount(Math.round(rowCount * columnCount / 2))
-            }
+            setColumnCount(event.target.value);
             }} id="inputColumnCount" min={2} max={16} />
+            <p>Difficulty: {Math.round((bombsCount / (rowCount * columnCount)) * 200)} %</p>
           <button onClick={() =>{
             localStorage.setItem("bombsNumber", bombsCount)
             localStorage.setItem("rowCount", rowCount);
