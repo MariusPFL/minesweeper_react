@@ -14,6 +14,8 @@ function App() {
   const [columnCount, setColumnCount] = React.useState(localStorage.getItem("columnCount") != null ? localStorage.getItem("columnCount") : 5);
   
   const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
+
+  const [currentFieldSize, setCurrentFieldSize] = React.useState(0);
   
   let gameFieldAsArray = [];
   
@@ -33,6 +35,7 @@ function App() {
   // UseEffects
   React.useEffect(() => {
     createFields();
+    setCurrentFieldSize(rowCount * columnCount);
   }, [])
 
   React.useEffect(() => {
@@ -43,7 +46,7 @@ function App() {
   
   // Check winning Conditions
   React.useEffect(() => {
-    if (openFields === (rowCount * columnCount) - bombsCount) {
+    if (openFields === (currentFieldSize) - bombsCount) {
       // alert("you won!");
       setShowWinEffect(true)
       window.setTimeout(RestartTheGame, 5000)
@@ -149,11 +152,11 @@ function App() {
             }
           </div>
         </center>
-        <p>Total Fields: {rowCount * columnCount}</p>
+        <p>Total Fields: {currentFieldSize}</p>
         <p>Total Bombs: {bombsCount}</p>
-        <p>Difficulty: {Math.round((bombsCount / (rowCount * columnCount)) * 200)} %</p>
+        <p>Difficulty: {Math.round((bombsCount / (currentFieldSize)) * 200)} %</p>
         <p>Opened Fields: {openFields}</p>
-        <p>Fields left: {rowCount * columnCount - bombsCount - openFields}</p>
+        <p>Fields left: {currentFieldSize - bombsCount - openFields}</p>
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
         <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
