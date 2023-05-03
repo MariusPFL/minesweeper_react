@@ -15,6 +15,13 @@ function App() {
   
   const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
 
+  const [playerScore, setPlayerScore] = React.useState(localStorage.getItem("playerScore"));
+
+  if (playerScore == null) {
+    localStorage.setItem("playerScore", 0);
+    setPlayerScore(0);
+  }
+
   const [currentFieldSize, setCurrentFieldSize] = React.useState(1);
 
   const [currentBombsCount, setCurrentBombsCount] = React.useState(0);
@@ -51,6 +58,9 @@ function App() {
   React.useEffect(() => {
     if (openFields === (currentFieldSize) - currentBombsCount) {
       // alert("you won!");
+      console.log("Player Score: " + playerScore);
+      console.log("Calculations: " + Math.round((currentBombsCount / (currentFieldSize)) * 200))
+      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 200));
       setShowWinEffect(true)
       window.setTimeout(RestartTheGame, 5000)
     }
@@ -152,6 +162,7 @@ function App() {
       <div className='blankSpaces100px'/>
       <div className='gameboy'>
         <center>
+          <p>Your Overall Score: {playerScore}</p>
           <div className='gameField' id='gameField'>
             {
               createFields()
@@ -166,6 +177,7 @@ function App() {
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
         <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
+          <h1>Configuration Game</h1>
           <label>Bombs</label>
           <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
           <label>Rows</label>
