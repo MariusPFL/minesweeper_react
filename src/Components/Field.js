@@ -15,7 +15,7 @@ function Field(props){
                 setBackGroundColor("red")
             }
         }
-        else{
+        else if(displayValue != "*"){
             setDisplayValue(props.value)
             if (hiddenValue >= 100) {
                 alert('game over');
