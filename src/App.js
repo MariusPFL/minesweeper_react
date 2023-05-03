@@ -22,6 +22,9 @@ function App() {
     setPlayerScore(0);
   }
 
+  if (localStorage.getItem("gameCount") == null) {
+    localStorage.setItem("gameCount", 0)
+  }
   const [currentFieldSize, setCurrentFieldSize] = React.useState(1);
 
   const [currentBombsCount, setCurrentBombsCount] = React.useState(0);
@@ -60,7 +63,7 @@ function App() {
       // alert("you won!");
       console.log("Player Score: " + playerScore);
       console.log("Calculations: " + Math.round((currentBombsCount / (currentFieldSize)) * 200))
-      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 200));
+      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 400));
       setShowWinEffect(true)
       window.setTimeout(RestartTheGame, 5000)
     }
