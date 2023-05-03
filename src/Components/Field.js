@@ -20,6 +20,8 @@ function Field(props){
             if (hiddenValue >= 100) {
                 alert('game over');
                 localStorage.removeItem("gameField")
+                let currentPlayerScore = localStorage.getItem("playerScore");
+                localStorage.setItem("playerScore", currentPlayerScore - 100);
                 window.location.reload();
             }
             else if(displayValue == "?" || displayValue == "*"){

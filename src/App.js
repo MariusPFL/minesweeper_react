@@ -15,7 +15,9 @@ function App() {
   
   const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
 
-  const [currentFieldSize, setCurrentFieldSize] = React.useState(0);
+  const [currentFieldSize, setCurrentFieldSize] = React.useState(1);
+
+  const [currentBombsCount, setCurrentBombsCount] = React.useState(0);
   
   let gameFieldAsArray = [];
   
@@ -36,6 +38,7 @@ function App() {
   React.useEffect(() => {
     createFields();
     setCurrentFieldSize(rowCount * columnCount);
+    setCurrentBombsCount(bombsCount);
   }, [])
 
   React.useEffect(() => {
@@ -46,7 +49,7 @@ function App() {
   
   // Check winning Conditions
   React.useEffect(() => {
-    if (openFields === (currentFieldSize) - bombsCount) {
+    if (openFields === (currentFieldSize) - currentBombsCount) {
       // alert("you won!");
       setShowWinEffect(true)
       window.setTimeout(RestartTheGame, 5000)
@@ -120,7 +123,10 @@ function App() {
   }
   
   function showTutorial(){
-    alert("Your objective is to click all the hidden fields [?] without ever clicking on a mine. You can (un)mark the fields with Holding CTRL while clicking! If you wanna make your life easier or more hell ;) you can adjust the difficulty very precisely down below, adjust the field and the Bombscount and then you can click on regenerate to save it and generate.")
+    alert("Your objective is to click all the hidden fields [?] without ever clicking on a mine. You can (un)mark the fields with Holding CTRL while clicking!"
+
+    + "If you wanna make your life easier or more hell ;) you can adjust the difficulty very precisely down below, " +
+    "adjust the field and the Bombscount and then you can click on regenerate to save it and generate.")
   }
 
   function createFields(){
@@ -153,10 +159,10 @@ function App() {
           </div>
         </center>
         <p>Total Fields: {currentFieldSize}</p>
-        <p>Total Bombs: {bombsCount}</p>
-        <p>Difficulty: {Math.round((bombsCount / (currentFieldSize)) * 200)} %</p>
+        <p>Total Bombs: {currentBombsCount}</p>
+        <p>Difficulty: {Math.round((currentBombsCount / (currentFieldSize)) * 200)} %</p>
         <p>Opened Fields: {openFields}</p>
-        <p>Fields left: {currentFieldSize - bombsCount - openFields}</p>
+        <p>Fields left: {currentFieldSize - currentBombsCount - openFields}</p>
         <button onClick={showTutorial}>?</button>
         <button onClick={RestartTheGame}>Restart</button>
         <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
