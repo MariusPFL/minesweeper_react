@@ -61,10 +61,10 @@ function App() {
   React.useEffect(() => {
     if (openFields === (currentFieldSize) - currentBombsCount) {
       // alert("you won!");
-      console.log("Player Score: " + playerScore);
-      console.log("Calculations: " + Math.round((currentBombsCount / (currentFieldSize)) * 200))
-      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 400));
       setShowWinEffect(true)
+      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 400));
+      let currentGamesCount = parseInt(localStorage.getItem("gameCount"));
+      localStorage.setItem("gameCount", currentGamesCount + 1)
       window.setTimeout(RestartTheGame, 5000)
     }
   }, [openFields])

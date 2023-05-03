@@ -7,7 +7,7 @@ function GameOver(){
     localStorage.removeItem("gameField")
     let currentPlayerScore = localStorage.getItem("playerScore");
     localStorage.setItem("playerScore", currentPlayerScore - 100);
-    let currentGamesCount = localStorage.getItem("gameCount")
+    let currentGamesCount = parseInt(localStorage.getItem("gameCount"));
     localStorage.setItem("gameCount", currentGamesCount + 1)
     window.location.reload();
 }
@@ -33,7 +33,7 @@ function Field(props){
             if (hiddenValue >= 100) {
                 setDisplayValue("BOMBASTIC");
                 setShowExplosions(true);
-                window.setTimeout(GameOver, 3000)
+                window.setTimeout(GameOver, 1500)
                 
             }
             else if(displayValue == "?" || displayValue == "*"){
