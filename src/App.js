@@ -76,6 +76,7 @@ function App() {
 
   function GameOverLoose(){
     setIsFieldDisabled(true)
+    Helpers.playSound(Helpers.SoundList.EXPLOSION)
     window.setTimeout(() => {
       alert('game over');
       localStorage.removeItem("gameField")
