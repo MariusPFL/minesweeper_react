@@ -1,3 +1,18 @@
+# Score
+For every win you get Your difficulty * 2 as Points
+so if you win one Game on Difficulty 100% you get 200 Points added to your Score
+
+For every loss you get -100
+
+## Future Expansion
+Maybe adjust the score a bit that bigger the field the more he get's as a score. And By that im not calculating more at the winning.
+Im Calculating a very tiny bit when he open's a field. But beware not at 0 because then he could earn points by making an easy game with just 0.
+So the plan is the value of the field is the value which get's added. So it's still valuable to choose a hard game. And if you fail you still got something to
+comprehend. and larger Maps where you need to do more get's a bit valuated to comprehend.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

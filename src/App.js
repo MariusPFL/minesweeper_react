@@ -3,7 +3,7 @@ import './App.css';
 import Field from './Components/Field'
 import React from 'react';
 import Confetti from 'react-confetti'
-
+import Helpers from './Helpers';
 
 function App() {
   console.log("Runs the code starts!")
@@ -16,6 +16,8 @@ function App() {
   const [bombsCount, setBombsCount] = React.useState(localStorage.getItem("bombsNumber") != null ? localStorage.getItem("bombsNumber") : rowCount);
 
   const [playerScore, setPlayerScore] = React.useState(localStorage.getItem("playerScore"));
+
+  const [isFieldDisabled, setIsFieldDisabled] = React.useState(false);
 
   if (playerScore == null) {
     localStorage.setItem("playerScore", 0);
@@ -35,8 +37,6 @@ function App() {
   const [showWinEffect, setShowWinEffect] = React.useState(false);
   
   let resultFromLocalStorage = JSON.parse(localStorage.getItem("gameField"));
-  console.log("Results from Local Storage:")
-  console.log(localStorage.getItem("gameField"));
   if (resultFromLocalStorage != null) {
     gameFieldAsArray = resultFromLocalStorage;
   }
@@ -60,16 +60,31 @@ function App() {
   // Check winning Conditions
   React.useEffect(() => {
     if (openFields === (currentFieldSize) - currentBombsCount) {
-      // alert("you won!");
-      setShowWinEffect(true)
-      localStorage.setItem("playerScore", parseInt(playerScore) + Math.round((currentBombsCount / (currentFieldSize)) * 400));
-      let currentGamesCount = parseInt(localStorage.getItem("gameCount"));
-      localStorage.setItem("gameCount", currentGamesCount + 1)
-      window.setTimeout(RestartTheGame, 5000)
+      winning();
     }
   }, [openFields])
 
   // Functions
+  function winning(){
+      // alert("you won!");
+      setIsFieldDisabled(true);
+      setShowWinEffect(true)
+      Helpers.addToScore(Math.floor((currentBombsCount / currentFieldSize) * 400));
+      Helpers.addToGameCount(1)
+      window.setTimeout(RestartTheGame, 5000)
+  }
+
+  function GameOverLoose(){
+    setIsFieldDisabled(true)
+    window.setTimeout(() => {
+      alert('game over');
+      localStorage.removeItem("gameField")
+      Helpers.addToScore(-100)
+      Helpers.addToGameCount(1);
+      window.location.reload();
+    }, 3000)
+}
+
   function CreateFieldAndSaveToLocalStorage(){
     // Creating the Game Field and generates boms and numbers
     for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
@@ -79,12 +94,7 @@ function App() {
       }
       gameFieldAsArray.push(row);
     }
-  
-    console.log(gameFieldAsArray); 
-    
     setBombsAndNumbers();
-    console.log("Updated game field");
-    console.log(gameFieldAsArray);
     JSON.stringify(localStorage.setItem("gameField", JSON.stringify(gameFieldAsArray)));
   }
   function increaseOpenedFieldsCounter(){
@@ -92,7 +102,7 @@ function App() {
   }
 
   function RestartTheGame(){
-    alert('is restarting the game');
+    // alert('is restarting the game');
     localStorage.removeItem("gameField")
     window.location.reload();
   }
@@ -151,6 +161,7 @@ function App() {
             <Field 
               value = {gameFieldAsArray[yIndex][xIndex]}
               increaseCounterMethod = {increaseOpenedFieldsCounter}
+              gameOverFunctionLoose = {GameOverLoose}
             />
             ))
           }
@@ -159,6 +170,8 @@ function App() {
     )
   }
 
+  // returning React Components
+
   return (
     <div className="App">
       {showWinEffect ? <Confetti /> : "" }
@@ -166,7 +179,7 @@ function App() {
       <div className='gameboy'>
         <center>
           <p>Your Overall Score: {playerScore}</p>
-          <div className='gameField' id='gameField'>
+          <div className='gameField' id='gameField' style={{pointerEvents: isFieldDisabled ? "none" : "auto"}}>
             {
               createFields()
             }

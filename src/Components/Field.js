@@ -1,19 +1,8 @@
 import React from "react";
 import ConfettiExplosion from 'react-confetti-explosion';
-
-
-function GameOver(){
-    alert('game over');
-    localStorage.removeItem("gameField")
-    let currentPlayerScore = localStorage.getItem("playerScore");
-    localStorage.setItem("playerScore", currentPlayerScore - 100);
-    let currentGamesCount = parseInt(localStorage.getItem("gameCount"));
-    localStorage.setItem("gameCount", currentGamesCount + 1)
-    window.location.reload();
-}
+import Helpers from "../Helpers";
 
 function Field(props){
-
     let hiddenValue = props.value;
     const[backGroundColor, setBackGroundColor] = React.useState("black");
     const [displayValue, setDisplayValue] = React.useState("?");
@@ -33,10 +22,9 @@ function Field(props){
             if (hiddenValue >= 100) {
                 setDisplayValue("BOMBASTIC");
                 setShowExplosions(true);
-                window.setTimeout(GameOver, 1500)
-                
+                props.gameOverFunctionLoose();
             }
-            else if(displayValue == "?" || displayValue == "*"){
+            else if(displayValue == "?"){
                 switch (hiddenValue) {
                     case 0:
                         setBackGroundColor("#33cc00")
@@ -54,6 +42,7 @@ function Field(props){
                         setBackGroundColor("#ff704d")
                         break;
                 }
+                // Helpers.addToScore(hiddenValue);
                 props.increaseCounterMethod();
                 setDisplayValue(props.value)
             }
