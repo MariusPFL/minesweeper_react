@@ -182,35 +182,35 @@ function App() {
       <div className='blankSpaces100px'/>
       <div className='gameboy'>
         <center>
-          <p>Your Overall Score: {playerScore}</p>
+          <p className='gameBoyLabel'>Your Overall Score: {playerScore}</p>
           <div className='gameField' id='gameField' style={{pointerEvents: isFieldDisabled ? "none" : "auto"}}>
             {
               createFields()
             }
           </div>
         </center>
-        <p>Total Fields: {currentFieldSize}</p>
-        <p>Total Bombs: {currentBombsCount}</p>
-        <p>Difficulty: {Math.round((currentBombsCount / (currentFieldSize)) * 200)} %</p>
-        <p>Opened Fields: {openFields}</p>
-        <p>Fields left: {currentFieldSize - currentBombsCount - openFields}</p>
-        <button onClick={showTutorial}>?</button>
-        <button onClick={RestartTheGame}>Restart</button>
+        <p className='gameBoyLabel'>Total Fields: {currentFieldSize}</p>
+        <p className='gameBoyLabel'>Total Bombs: {currentBombsCount}</p>
+        <p className='gameBoyLabel'>Difficulty: {Math.round((currentBombsCount / (currentFieldSize)) * 200)} %</p>
+        <p className='gameBoyLabel'>Opened Fields: {openFields}</p>
+        <p className='gameBoyLabel'>Fields left: {currentFieldSize - currentBombsCount - openFields}</p>
+        <button className='gameBoyButton' onClick={showTutorial}>?</button>
+        <button className='gameBoyButton' onClick={RestartTheGame}>Restart</button>
         <div style={{display: 'flex', flexDirection: 'column', width: 'min-content'}}>
           <h1>Configuration Game</h1>
           <label>Bombs</label>
-          <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2}/>
+          <input type='number' value={bombsCount} onChange={(event) => {setBombsCount(event.target.value)}} id="inputBombNumber" min={1} max={rowCount * columnCount / 2} className='configurationInput'/>
           <label>Rows</label>
-          <input type='number' value={rowCount} onChange={(event) => 
+          <input type='number' className='configurationInput' value={rowCount} onChange={(event) => 
             {
               setRowCount(event.target.value);
-            }} id="inputRowCount" min={1} max={16}/>
+            }} id="inputRowCount" min={1} max={16} />
           <label>Columns</label>
-          <input type='number' value={columnCount} onChange={(event) => {
+          <input type='number' className='configurationInput' value={columnCount} onChange={(event) => {
             setColumnCount(event.target.value);
             }} id="inputColumnCount" min={2} max={16} />
             <p>Difficulty: {Math.round((bombsCount / (rowCount * columnCount)) * 200)} %</p>
-          <button onClick={() =>{
+          <button className='configurationButton' onClick={() =>{
             localStorage.setItem("bombsNumber", bombsCount)
             localStorage.setItem("rowCount", rowCount);
             localStorage.setItem("columnCount", columnCount);
