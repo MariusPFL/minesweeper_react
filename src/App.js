@@ -157,7 +157,8 @@ function App() {
     alert("Your objective is to click all the hidden fields [?] without ever clicking on a mine. You can (un)mark the fields with Holding CTRL while clicking!"
 
     + "If you wanna make your life easier or more hell ;) you can adjust the difficulty very precisely down below, " +
-    "adjust the field and the Bombscount and then you can click on regenerate to save it and generate.")
+    "adjust the field and the Bombscount and then you can click on regenerate to save it and generate." +
+    "You can fastly refresh it with pressing R")
   }
 
   function createFields(){
