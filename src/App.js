@@ -50,6 +50,12 @@ function App() {
     createFields();
     setCurrentFieldSize(rowCount * columnCount);
     setCurrentBombsCount(bombsCount);
+    const handleKeyPresses = (event) => {
+      if(event.key === 'r'){
+        window.location.reload();
+      }
+    }
+    window.addEventListener("keydown", handleKeyPresses)
   }, [])
 
   React.useEffect(() => {
@@ -77,12 +83,12 @@ function App() {
 
   function GameOverLoose(){
     setIsFieldDisabled(true)
-    Helpers.playSound(Helpers.SoundList.EXPLOSION)
+    // Helpers.playSound(Helpers.SoundList.EXPLOSION)
+    localStorage.removeItem("gameField")
+    Helpers.addToScore(-100)
+    Helpers.addToGameCount(1);
     window.setTimeout(() => {
       alert('game over');
-      localStorage.removeItem("gameField")
-      Helpers.addToScore(-100)
-      Helpers.addToGameCount(1);
       window.location.reload();
     }, 3000)
 }
