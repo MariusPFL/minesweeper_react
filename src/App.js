@@ -4,6 +4,7 @@ import Field from './Components/Field'
 import React from 'react';
 import Confetti from 'react-confetti'
 import Helpers from './Helpers';
+import Footer from './Components/Footer';
 
 function App() {
   console.log("Runs the code starts!")
@@ -217,6 +218,8 @@ function App() {
             RestartTheGame();
           }}>regenerate Field</button>
         </div>
+        <div className='blankSpaces100px'></div>
+        <Footer></Footer>
       </div>
     </div>
   );
