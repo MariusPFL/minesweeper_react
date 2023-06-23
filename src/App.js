@@ -130,8 +130,8 @@ function App() {
     }
   }
   
-  // Sorry for this confusion this construction exists because of the console Logging which is obsolete now
   function setNumber(yAxisIndex, xAxisIndex){
+    // Sorry for this confusion this construction exists because of the console Logging which is obsolete now. But if needed again.
     if (yAxisIndex < 0 || yAxisIndex > rowCount -1) {
     }
     else if(xAxisIndex < 0 || xAxisIndex > columnCount - 1){
@@ -163,6 +163,9 @@ function App() {
               value = {gameFieldAsArray[yIndex][xIndex]}
               increaseCounterMethod = {increaseOpenedFieldsCounter}
               gameOverFunctionLoose = {GameOverLoose}
+              id={"field" + yIndex + "-" + xIndex}
+              yIndex = {yIndex}
+              xIndex = {xIndex}
             />
             ))
           }
@@ -170,7 +173,7 @@ function App() {
       ))
     )
   }
-
+  
   // returning React Components
 
   return (

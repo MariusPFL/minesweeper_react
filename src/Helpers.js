@@ -15,7 +15,7 @@ class Helpers{
     static playSound(soundFromSoundList){
         const mySound = new Audio(soundFromSoundList)
         mySound.loop = false;
-        mySound.play();
+        // mySound.play();
     }
 }
 

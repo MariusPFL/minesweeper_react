@@ -42,14 +42,14 @@ function Field(props){
                         setBackGroundColor("#ff704d")
                         break;
                 }
-                // Helpers.addToScore(hiddenValue);
+                Helpers.addToScore(hiddenValue * 4);
                 props.increaseCounterMethod();
                 setDisplayValue(props.value)
             }
         }
     }
     return(
-        <div className="field" onClick={handleClick} style={{background: backGroundColor}}>
+        <div className="field" onClick={handleClick} style={{background: backGroundColor}} id={props.id}>
             {showExplosions ? <ConfettiExplosion /> : ""}
             <p>{displayValue} </p>
         </div>
