@@ -52,7 +52,7 @@ function App() {
     setCurrentBombsCount(bombsCount);
     const handleKeyPresses = (event) => {
       if(event.key === 'r'){
-        window.location.reload();
+        RestartTheGame();
       }
       if(event.key === 'g'){
         const input = prompt("Greet God");
@@ -231,7 +231,7 @@ function App() {
             localStorage.setItem("rowCount", rowCount);
             localStorage.setItem("columnCount", columnCount);
             RestartTheGame();
-          }}>regenerate Field</button>
+          }}>Save and regenerate Field</button>
         </div>
         <div className='blankSpaces100px'></div>
         <Footer></Footer>
