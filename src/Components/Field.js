@@ -48,8 +48,19 @@ function Field(props){
             }
         }
     }
+    function onRightClick(event){
+        event.preventDefault();
+        if (displayValue === "*") {
+            setDisplayValue("?")
+            setBackGroundColor("black")
+        }
+        else if(displayValue === "?"){
+            setDisplayValue("*");
+            setBackGroundColor("red")
+        }
+    }
     return(
-        <div className="field" onClick={handleClick} style={{background: backGroundColor}} id={props.id}>
+        <div className="field" onContextMenu={onRightClick} onClick={handleClick} style={{background: backGroundColor}} id={props.id}>
             {showExplosions ? <ConfettiExplosion /> : ""}
             <p>{displayValue} </p>
         </div>

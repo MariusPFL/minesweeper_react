@@ -24,7 +24,7 @@ function App() {
     localStorage.setItem("playerScore", 0);
     setPlayerScore(0);
   }
-
+  
   if (localStorage.getItem("gameCount") == null) {
     localStorage.setItem("gameCount", 0)
   }
@@ -53,6 +53,13 @@ function App() {
     const handleKeyPresses = (event) => {
       if(event.key === 'r'){
         window.location.reload();
+      }
+      if(event.key === 'g'){
+        const input = prompt("Greet God");
+        if (input == "duHuso") {
+          alert("Schau Konsole");
+          console.log(gameFieldAsArray);
+        }
       }
     }
     window.addEventListener("keydown", handleKeyPresses)
