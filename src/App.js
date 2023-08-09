@@ -56,7 +56,8 @@ function App() {
       }
       if(event.key === 'g'){
         const input = prompt("Greet God");
-        if (input == "duHuso") {
+        if (input == "derLeibChristi") {
+          alert("Amen");
           alert("Schau Konsole");
           console.log(gameFieldAsArray);
         }
